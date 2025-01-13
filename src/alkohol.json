@@ -1,14 +1,80 @@
 [
   {
-    "name": "Gorbatchov Vodka",
-    "type": "Vodka",
-    "origin": "Russia",
-    "alcohol_percentage": 37.5
+    "name": "Birra Moretti",
+    "prozentanteil": 4.6,
+    "erstellungsjahr": 1859,
+    "tageskonsum": 85000
   },
   {
-    "name": "Moretti",
-    "type": "Beer",
-    "origin": "Italy",
-    "alcohol_percentage": 4.6
+    "name": "Smirnoff",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1864,
+    "tageskonsum": 12000
+  },
+  {
+    "name": "Absolut Vodka",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1879,
+    "tageskonsum": 9000
+  },
+  {
+    "name": "Bacardi",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1862,
+    "tageskonsum": 10000
+  },
+  {
+    "name": "Smirnoff Ice",
+    "prozentanteil": 5,
+    "erstellungsjahr": 1999,
+    "tageskonsum": 6000
+  },
+  {
+    "name": "Heineken",
+    "prozentanteil": 5,
+    "erstellungsjahr": 1873,
+    "tageskonsum": 150000
+  },
+  {
+    "name": "Rotwein",
+    "prozentanteil": 12,
+    "erstellungsjahr": -6000,
+    "tageskonsum": 45000
+  },
+  {
+    "name": "Weisswein",
+    "prozentanteil": 11,
+    "erstellungsjahr": -6000,
+    "tageskonsum": 40000
+  },
+  {
+    "name": "Feldschlösschen",
+    "prozentanteil": 5,
+    "erstellungsjahr": 1876,
+    "tageskonsum": 90000
+  },
+  {
+    "name": "Eichhof",
+    "prozentanteil": 4.8,
+    "erstellungsjahr": 1834,
+    "tageskonsum": 70000
+  },
+  {
+    "name": "Appenzeller Alpenbitter",
+    "prozentanteil": 29,
+    "erstellungsjahr": 1902,
+    "tageskonsum": 3500
+  },
+  {
+    "name": "Kirsch",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1600,
+    "tageskonsum": 2000
+  },
+  {
+    "name": "Absinthe",
+    "prozentanteil": 53,
+    "erstellungsjahr": 1792,
+    "tageskonsum": 1000
   }
 ]
