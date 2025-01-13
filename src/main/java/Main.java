@@ -10,7 +10,8 @@ import com.mongodb.client.MongoIterable;
 public class Main {
 
     public static void main(String[] args) {
-        ConnectionString connectionString = new ConnectionString("mongodb://root:root@localhost");
+        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017");
+
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .serverApi(ServerApi.builder()
@@ -19,15 +20,11 @@ public class Main {
                 .build();
 
         MongoClient mongoClient = MongoClients.create(settings);
-        MongoDatabase database = mongoClient.getDatabase("carCards");
+        MongoDatabase database = mongoClient.getDatabase("alcohol");
+
         MongoIterable<String> list = database.listCollectionNames();
         for (String name : list) {
             System.out.println(name);
         }
     }
 }
-
-
-//docker pull mongo
-//docker run --name mongodb-container -d -p 27017:27017 mongo
-//After put the movie.json with Compass in the DB
