@@ -7,7 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoIterable;
 
-public class Main{
+public class Main {
 
     public static void main(String[] args) {
         ConnectionString connectionString = new ConnectionString("mongodb://root:root@localhost");
@@ -26,3 +26,8 @@ public class Main{
         }
     }
 }
+
+
+//docker pull mongo
+//docker run --name mongodb-container -d -p 27017:27017 mongo
+//After put the movie.json with Compass in the DB

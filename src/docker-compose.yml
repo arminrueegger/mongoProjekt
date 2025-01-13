@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./alcohol.json:/alcohol.json
+    environment:
+      MONGO_INITDB_DATABASE: alcohol_db
+    command: >
+      bash -c "
+      mongod --fork --logpath /var/log/mongodb.log --bind_ip_all &&
+      mongoimport --db alcohol_db --collection alcohols --file /alcohol.json --jsonArray &&
+      tail -f /dev/null"
+
+volumes:
+  mongo-data:
