@@ -1,11 +1,11 @@
 import "../CSS/quiz.css";
 import { useState } from "react";
-import { Question } from "./Question.tsx";
+import { Question } from "./question.tsx";
 
 export function Quiz() {
     const [selectedQuestion, setSelectedQuestion] = useState(null);
 
-    const handleClick = (category) => {
+    const handleClick = (category: any) => {
         setSelectedQuestion(category);
     };
 
