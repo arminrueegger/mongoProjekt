@@ -6,7 +6,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-      - ./src/alcohol.json:/alcohol.json
+      - ./alcohol.json:/alcohol.json
     environment:
       MONGO_INITDB_DATABASE: alcohol_db
     command:

@@ -1,5 +1,6 @@
 package alcohol.backend;
 
+import alcohol.backend.domain.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -16,7 +17,9 @@ public class QuizService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public List<Document> getQuizData(String category, double value) {
+    private QuestionDTO currentQuestion;
+
+    public QuestionDTO getQuizData(String category, double value) {
         Criteria matchCategory = Criteria.where(category).exists(true);
 
         Criteria rangeCriteria = Criteria.where(category)
@@ -26,12 +29,23 @@ public class QuizService {
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(matchCategory),
                 Aggregation.match(rangeCriteria),
-                Aggregation.sample(3)
+                Aggregation.sample(1)
         );
 
-        AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "your_collection_name", Document.class);
+        AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "alcohol_db", Document.class);
+        List<Document> documents = results.getMappedResults();
 
-        return results.getMappedResults();
+        if (!documents.isEmpty()) {
+            Document doc = documents.get(0);
+
+            currentQuestion = new QuestionDTO(doc.getString("name"));
+            return currentQuestion;
+        }
+
+        return new QuestionDTO("Keine Daten verfügbar");
+    }
+
+    public QuestionDTO getCurrentQuestion() {
+        return currentQuestion;
     }
 }
-
