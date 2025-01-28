@@ -1,0 +1,31 @@
+/* Quiz-Container */
+.quiz-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Fragenliste */
+.quiz-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.quiz-item {
+    background: #007BFF;
+    color: white;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 18px;
+}
+
+.quiz-item:hover {
+    background: #0056b3;
+}
