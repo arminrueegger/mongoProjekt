@@ -1,17 +1,24 @@
-import './App.css'
-import {Login} from "./components"
+import "./App.css";
+import { useState } from "react";
+import { Login } from "./components";
+import { Quiz } from "./components";
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  return (
-    <div className="header-div">
-      <h1 className="header">Quiz App</h1>
+    return (
+        <div className="app-container">
+            <h1 className="app-header">Alkohol Quiz</h1>
 
-        <Login/>
-
-
-    </div>
-  )
+            <div className="app-content">
+                {!isLoggedIn ? (
+                    <Login onSubmit={() => setIsLoggedIn(true)} />
+                ) : (
+                    <Quiz />
+                )}
+            </div>
+        </div>
+    );
 }
 
-export default App
+export default App;

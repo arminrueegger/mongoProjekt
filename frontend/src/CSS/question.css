@@ -1,0 +1,38 @@
+/* Frage-Container */
+.question-container {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Frage-Titel */
+.question-title {
+    font-size: 22px;
+    color: #007BFF;
+}
+
+/* Frage-Text */
+.question-text {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Zurück-Button */
+.back-button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+}
+
+.back-button:hover {
+    background: #218838;
+}
