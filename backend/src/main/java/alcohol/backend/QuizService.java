@@ -62,9 +62,16 @@ public class QuizService {
             AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, collectionName, Document.class);
             List<Document> documents = results.getMappedResults();
 
-            return documents.stream()
+            List<QuestionDTO> questions = documents.stream()
                 .map(doc -> new QuestionDTO(doc.getString("name")))
                 .collect(Collectors.toList());
+
+            // Setze die erste Frage als aktuelle Frage
+            if (!questions.isEmpty()) {
+                setCurrentQuestion(questions.get(0));
+            }
+
+            return questions;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

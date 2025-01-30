@@ -1,11 +1,30 @@
 package alcohol.backend.domain;
 
 public class ResultsDTO {
-    Boolean wasRight;
-    AnswerDTO result;
+    private Boolean wasRight;
+    private AnswerDTO result;
 
     public ResultsDTO(Boolean wasRight, AnswerDTO result){
         this.wasRight = wasRight;
+        this.result = result;
+    }
+
+    // Default constructor for Jackson
+    public ResultsDTO() {}
+
+    public Boolean getWasRight() {
+        return wasRight;
+    }
+
+    public void setWasRight(Boolean wasRight) {
+        this.wasRight = wasRight;
+    }
+
+    public AnswerDTO getResult() {
+        return result;
+    }
+
+    public void setResult(AnswerDTO result) {
         this.result = result;
     }
 }

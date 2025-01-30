@@ -10,9 +10,19 @@ interface QuestionData {
     name: string;
 }
 
+interface AnswerResponse {
+    wasRight: boolean;
+    result: {
+        name: string;
+        worth: number;
+    };
+}
+
 export function Question({ question, onBack }: QuestionProps) {
     const [answers, setAnswers] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
+    const [result, setResult] = useState<string>("");
+    const [isAnswered, setIsAnswered] = useState(false);
 
     useEffect(() => {
         const category = question.toLowerCase();
@@ -37,6 +47,33 @@ export function Question({ question, onBack }: QuestionProps) {
             });
     }, [question]);
 
+    const handleAnswer = async (selectedAnswer: string) => {
+        if (isAnswered) return;
+
+        try {
+            const response = await fetch('http://localhost:8080/check-answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: selectedAnswer }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data: AnswerResponse = await response.json();
+            setResult(data.wasRight ? "Richtig!" : "Falsch!");
+            setIsAnswered(true);
+
+            // Wait 2 seconds before going back
+            setTimeout(onBack, 2000);
+        } catch (error) {
+            setError("Fehler beim Überprüfen der Antwort");
+        }
+    };
+
     return (
         <div className="question-container">
             <h2 className="question-title">{question}</h2>
@@ -52,9 +89,19 @@ export function Question({ question, onBack }: QuestionProps) {
                 {error ? (
                     <p className="error-message">{error}</p>
                 ) : answers.length > 0 ? (
-                    answers.map((answer, id) => (
-                        <button key={id} className="answer-button">{answer}</button>
-                    ))
+                    <>
+                        {answers.map((answer, id) => (
+                            <button 
+                                key={id} 
+                                className={`answer-button ${isAnswered ? 'disabled' : ''}`}
+                                onClick={() => handleAnswer(answer)}
+                                disabled={isAnswered}
+                            >
+                                {answer}
+                            </button>
+                        ))}
+                        {result && <p className="result-message">{result}</p>}
+                    </>
                 ) : (
                     <p>Lade Antworten...</p>
                 )}
