@@ -12,6 +12,7 @@ services:
     command:
       bash -c "
       mongod --fork --logpath /var/log/mongodb.log --bind_ip_all &&
+      sleep 5 && 
       mongoimport --db alcohol_db --collection alcohols --file /alcohol.json --jsonArray &&
       tail -f /dev/null"
 

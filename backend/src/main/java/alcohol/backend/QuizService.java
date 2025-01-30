@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.bson.Document;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class QuizService {
@@ -19,30 +21,58 @@ public class QuizService {
 
     private QuestionDTO currentQuestion;
 
-    public QuestionDTO getQuizData(String category, double value) {
-        Criteria matchCategory = Criteria.where(category).exists(true);
-
-        Criteria rangeCriteria = Criteria.where(category)
-                .gte(value * 0.5)
-                .lte(value * 1.5);
-
-        Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(matchCategory),
-                Aggregation.match(rangeCriteria),
+    public List<QuestionDTO> getQuizData(String category) {
+        try {
+            String collectionName = "alcohols";
+            
+            // First, get a random document to use its value as reference
+            Aggregation randomAggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where(category).exists(true)),
                 Aggregation.sample(1)
-        );
+            );
+            
+            Document randomDoc = mongoTemplate.aggregate(randomAggregation, collectionName, Document.class)
+                .getUniqueMappedResult();
+                
+            if (randomDoc == null) {
+                return new ArrayList<>();
+            }
 
-        AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "alcohol_db", Document.class);
-        List<Document> documents = results.getMappedResults();
+            // Handle both Integer and Double values
+            double referenceValue;
+            Object value = randomDoc.get(category);
+            if (value instanceof Integer) {
+                referenceValue = ((Integer) value).doubleValue();
+            } else if (value instanceof Double) {
+                referenceValue = (Double) value;
+            } else {
+                throw new IllegalArgumentException("Unexpected value type for category: " + category);
+            }
+            
+            // Then get documents with similar values (±50%)
+            Criteria rangeCriteria = Criteria.where(category)
+                .gte(referenceValue * 0.5)
+                .lte(referenceValue * 1.5);
 
-        if (!documents.isEmpty()) {
-            Document doc = documents.get(0);
+            Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(rangeCriteria),
+                Aggregation.sample(3)
+            );
 
-            currentQuestion = new QuestionDTO(doc.getString("name"));
-            return currentQuestion;
+            AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, collectionName, Document.class);
+            List<Document> documents = results.getMappedResults();
+
+            return documents.stream()
+                .map(doc -> new QuestionDTO(doc.getString("name")))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
+    }
 
-        return new QuestionDTO("Keine Daten verfügbar");
+    public void setCurrentQuestion(QuestionDTO question) {
+        this.currentQuestion = question;
     }
 
     public QuestionDTO getCurrentQuestion() {

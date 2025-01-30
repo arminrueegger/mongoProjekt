@@ -6,38 +6,30 @@ import alcohol.backend.domain.ResultsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class QuizController {
 
     @Autowired
     private QuizService quizService;
 
-    /**
-     * GET endpoint to send the question name only.
-     */
-    @GetMapping("/question")
-    public QuestionDTO quiz() {
-        String category = "prozentanteil"; // Example category
-        double value = 4.6;               // Example value
-        return quizService.getQuizData(category, value);
+    @GetMapping("/question/{category}")
+    public List<QuestionDTO> quiz(@PathVariable String category) {
+        return quizService.getQuizData(category.toLowerCase());
     }
 
-    /**
-     * POST endpoint to check the answer and return the result.
-     */
     @PostMapping("/check-answer")
     public ResultsDTO checkAnswer(@RequestBody AnswerDTO answer) {
         QuestionDTO currentQuestion = quizService.getCurrentQuestion();
 
         if (currentQuestion == null) {
-            return new ResultsDTO(false, null); // No current question available
+            return new ResultsDTO(false, null);
         }
 
-        // Check if the provided answer matches the expected answer
-        boolean isCorrect = currentQuestion.name.equals(answer.getName());
-
-        // Create the correct answer for reference (this is just an example)
-        AnswerDTO correctAnswer = new AnswerDTO(currentQuestion.name, 5);
+        boolean isCorrect = currentQuestion.getName().equalsIgnoreCase(answer.getName());
+        AnswerDTO correctAnswer = new AnswerDTO(currentQuestion.getName(), 5);
 
         return new ResultsDTO(isCorrect, correctAnswer);
     }
