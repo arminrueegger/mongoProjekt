@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 interface QuestionProps {
     question: string;
-    onBack: () => void;
+    onBack: (wasCorrect: boolean) => void;
 }
 
 interface QuestionData {
@@ -23,8 +23,15 @@ export function Question({ question, onBack }: QuestionProps) {
     const [error, setError] = useState<string>("");
     const [result, setResult] = useState<string>("");
     const [isAnswered, setIsAnswered] = useState(false);
+    const [showNextButton, setShowNextButton] = useState(false);
+    const [questionKey, setQuestionKey] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
+        setIsAnswered(false);
+        setResult("");
+        setShowNextButton(false);
         const category = question.toLowerCase();
         fetch(`http://localhost:8080/question/${category}`)
             .then((response) => {
@@ -44,8 +51,11 @@ export function Question({ question, onBack }: QuestionProps) {
             .catch((error) => {
                 console.error("Fehler beim Abrufen der Frage: ", error);
                 setError("Fehler beim Laden der Fragen");
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-    }, [question]);
+    }, [question, questionKey]);
 
     const handleAnswer = async (selectedAnswer: string) => {
         if (isAnswered) return;
@@ -66,13 +76,31 @@ export function Question({ question, onBack }: QuestionProps) {
             const data: AnswerResponse = await response.json();
             setResult(data.wasRight ? "Richtig!" : "Falsch!");
             setIsAnswered(true);
+            setShowNextButton(true);
 
-            // Wait 2 seconds before going back
-            setTimeout(onBack, 2000);
+            if (data.wasRight) {
+                onBack(true);
+            }
         } catch (error) {
             setError("Fehler beim Überprüfen der Antwort");
         }
     };
+
+    const handleNext = async () => {
+        setIsLoading(true);
+        setQuestionKey(prev => prev + 1);
+        await new Promise(resolve => setTimeout(resolve, 0));
+        onBack(false);
+    };
+
+    if (isLoading) {
+        return (
+            <div className="question-container">
+                <h2 className="question-title">Lade neue Frage...</h2>
+                <div className="loading-spinner"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="question-container">
@@ -101,14 +129,19 @@ export function Question({ question, onBack }: QuestionProps) {
                             </button>
                         ))}
                         {result && <p className="result-message">{result}</p>}
+                        {showNextButton && (
+                            <button 
+                                className="next-button"
+                                onClick={handleNext}
+                            >
+                                Nächste Frage
+                            </button>
+                        )}
                     </>
                 ) : (
                     <p>Lade Antworten...</p>
                 )}
             </div>
-            <button className="back-button" onClick={onBack}>
-                Zurück zur Auswahl
-            </button>
         </div>
     );
 }

@@ -76,5 +76,83 @@
     "prozentanteil": 53,
     "erstellungsjahr": 1792,
     "tageskonsum": 1000
+  },
+  {
+    "name": "Jägermeister",
+    "prozentanteil": 35,
+    "erstellungsjahr": 1934,
+    "tageskonsum": 4500
+  },
+  {
+    "name": "Corona",
+    "prozentanteil": 4.5,
+    "erstellungsjahr": 1925,
+    "tageskonsum": 130000
+  },
+  {
+    "name": "Jack Daniels",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1866,
+    "tageskonsum": 8000
+  },
+  {
+    "name": "Guinness",
+    "prozentanteil": 4.2,
+    "erstellungsjahr": 1759,
+    "tageskonsum": 95000
+  },
+  {
+    "name": "Grey Goose",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1997,
+    "tageskonsum": 5500
+  },
+  {
+    "name": "Hennessy",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1765,
+    "tageskonsum": 7500
+  },
+  {
+    "name": "Baileys",
+    "prozentanteil": 17,
+    "erstellungsjahr": 1974,
+    "tageskonsum": 4000
+  },
+  {
+    "name": "Prosecco",
+    "prozentanteil": 11,
+    "erstellungsjahr": 1754,
+    "tageskonsum": 35000
+  },
+  {
+    "name": "Champagner",
+    "prozentanteil": 12,
+    "erstellungsjahr": 1693,
+    "tageskonsum": 25000
+  },
+  {
+    "name": "Martini",
+    "prozentanteil": 18,
+    "erstellungsjahr": 1863,
+    "tageskonsum": 15000
+  },
+  {
+    "name": "Bombay Sapphire",
+    "prozentanteil": 47,
+    "erstellungsjahr": 1987,
+    "tageskonsum": 6500
+  },
+  {
+    "name": "Chivas Regal",
+    "prozentanteil": 40,
+    "erstellungsjahr": 1801,
+    "tageskonsum": 5000
+  },
+  {
+    "name": "Aperol",
+    "prozentanteil": 11,
+    "erstellungsjahr": 1919,
+    "tageskonsum": 30000
   }
 ]
