@@ -28,13 +28,11 @@ public class QuizController {
     public List<QuestionDTO> quiz(@PathVariable String category) {
         List<QuestionDTO> questions = quizService.getQuizData(category.toLowerCase());
         
-        // Find the question with the highest/lowest value based on category
         if (!questions.isEmpty()) {
             String collectionName = "alcohols";
             Document highestDoc = null;
             
             if (category.equalsIgnoreCase("erstellungsjahr")) {
-                // For Erstellungsjahr, we want the oldest (lowest) year
                 highestDoc = mongoTemplate.aggregate(
                     Aggregation.newAggregation(
                         Aggregation.match(Criteria.where("name").in(
@@ -47,7 +45,6 @@ public class QuizController {
                     Document.class
                 ).getUniqueMappedResult();
             } else {
-                // For other categories, we want the highest value
                 highestDoc = mongoTemplate.aggregate(
                     Aggregation.newAggregation(
                         Aggregation.match(Criteria.where("name").in(

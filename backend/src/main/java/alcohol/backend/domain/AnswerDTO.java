@@ -9,7 +9,6 @@ public class AnswerDTO {
         this.worth = worth;
     }
 
-    // Default constructor for Jackson
     public AnswerDTO() {}
 
     public String getName() {

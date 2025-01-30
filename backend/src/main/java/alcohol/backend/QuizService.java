@@ -25,7 +25,6 @@ public class QuizService {
         try {
             String collectionName = "alcohols";
             
-            // First, get a random document to use its value as reference
             Aggregation randomAggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where(category).exists(true)),
                 Aggregation.sample(1)
@@ -38,7 +37,6 @@ public class QuizService {
                 return new ArrayList<>();
             }
 
-            // Handle both Integer and Double values
             double referenceValue;
             Object value = randomDoc.get(category);
             if (value instanceof Integer) {
@@ -66,7 +64,6 @@ public class QuizService {
                 .map(doc -> new QuestionDTO(doc.getString("name")))
                 .collect(Collectors.toList());
 
-            // Setze die erste Frage als aktuelle Frage
             if (!questions.isEmpty()) {
                 setCurrentQuestion(questions.get(0));
             }

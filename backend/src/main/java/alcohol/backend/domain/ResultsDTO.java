@@ -9,7 +9,6 @@ public class ResultsDTO {
         this.result = result;
     }
 
-    // Default constructor for Jackson
     public ResultsDTO() {}
 
     public Boolean getWasRight() {
