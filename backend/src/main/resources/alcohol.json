@@ -36,18 +36,6 @@
     "tageskonsum": 150000
   },
   {
-    "name": "Rotwein",
-    "prozentanteil": 12,
-    "erstellungsjahr": -6000,
-    "tageskonsum": 45000
-  },
-  {
-    "name": "Weisswein",
-    "prozentanteil": 11,
-    "erstellungsjahr": -6000,
-    "tageskonsum": 40000
-  },
-  {
     "name": "Feldschlösschen",
     "prozentanteil": 5,
     "erstellungsjahr": 1876,

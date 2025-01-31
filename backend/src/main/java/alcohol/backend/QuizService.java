@@ -47,7 +47,6 @@ public class QuizService {
                 throw new IllegalArgumentException("Unexpected value type for category: " + category);
             }
             
-            // Then get documents with similar values (±50%)
             Criteria rangeCriteria = Criteria.where(category)
                 .gte(referenceValue * 0.5)
                 .lte(referenceValue * 1.5);

@@ -1,6 +1,6 @@
 import "../CSS/quiz.css";
 import { useState } from "react";
-import { Question } from "./Question";
+import { Question } from "./question";
 
 export function Quiz() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
